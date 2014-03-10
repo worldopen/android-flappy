@@ -98,7 +98,7 @@ public class GameActivity extends BaseGameActivity {
 		gameScene.pause();
 	}
 
-	/*public void gotoPlayStore() {
+	public void gotoPlayStore() {
 		try {
 			Intent i = new Intent(Intent.ACTION_VIEW, 
 					Uri.parse("market://details?id=" + getString(R.string.google_play_app_id)));
@@ -111,7 +111,7 @@ public class GameActivity extends BaseGameActivity {
 			ResourceManager.getInstance().activity.startActivity(i);
 		}
 		
-	}*/
+	}
 
 	
 }
