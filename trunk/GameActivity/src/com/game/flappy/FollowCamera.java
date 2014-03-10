@@ -9,7 +9,7 @@ import org.andengine.util.Constants;
 
 public class FollowCamera extends Camera {
 
-	private IEntity mChaseEntity;
+	   private IEntity mChaseEntity;
 
 	public FollowCamera(float pX, float pY, float pWidth, float pHeight) {
 		super(pX, pY, pWidth, pHeight);
