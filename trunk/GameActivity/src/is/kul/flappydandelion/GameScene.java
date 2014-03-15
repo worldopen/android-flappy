@@ -92,7 +92,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener, ContactLi
 		
 		scoreText = new Text(Constants.CW / 2 , Constants.CH / 2 + 200, res.font, "12345678901234567890", vbom);
 		hud.attachChild(scoreText);
-		
+		/*
 		Sprite banner = new Sprite(0, Constants.CH, res.bannerRegion, vbom) {
 
 			@Override
@@ -107,8 +107,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener, ContactLi
 		};
 		banner.setAnchorCenter(0, 1);
 		hud.registerTouchArea(banner);
-		hud.attachChild(banner);
-		
+		hud.attachChild(banner);*/
 	}
 
 	private void createBounds() {
@@ -156,16 +155,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener, ContactLi
 
 	private void createBackground() {
 		pb = new ParallaxBackground(0.75f, 0.83f, 0.95f);
-		Entity clouds = new Rectangle(0, 0, 1000, 800, vbom);
+		Entity clouds = new Rectangle(0, 0, 480, 800, vbom);
 		clouds.setAnchorCenter(0, 0);
 		clouds.setAlpha(0f);
-		clouds.attachChild(new Sprite(100, 500, res.cloudRegion, vbom));
-		clouds.attachChild(new Sprite(300, 700, res.cloudRegion, vbom));
-		
-		clouds.attachChild(new Sprite(500, 600, res.cloudRegion, vbom));
-		clouds.attachChild(new Sprite(800, 730, res.cloudRegion, vbom));
-		
-		ParallaxEntity pe = new ParallaxEntity(-0.2f, clouds);
+		clouds.attachChild(new Sprite(240,400, res.backGround, vbom));
+		ParallaxEntity pe = new ParallaxEntity(1f, clouds);
 		pb.attachParallaxEntity(pe);
 		setBackground(pb);
 	}
@@ -265,7 +259,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener, ContactLi
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
 		super.onManagedUpdate(pSecondsElapsed);
-		pb.setParallaxValue(res.camera.getCenterX());
+		//pb.setParallaxValue(res.camera.getCenterX());
 		if (scored) {
 			addPillar();
 			sortChildren();
