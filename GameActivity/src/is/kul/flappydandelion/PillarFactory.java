@@ -19,7 +19,7 @@ public class PillarFactory {
 	int nextY;
 	int dy;
 	
-	final int dx = 300;
+	final int dx = 250;
 	
 	final int maxY = 550;
 	final int minY = 350;
