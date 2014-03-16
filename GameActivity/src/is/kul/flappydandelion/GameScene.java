@@ -23,7 +23,6 @@ import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.debug.Debug;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -127,10 +126,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
 				if (dandelionBody.getLinearVelocity().y > -0.01) {
-					// dandelion.setCurrentTileIndex(1);
 					dandelion.setRotation(-45);
 				} else {
-					// dandelion.setCurrentTileIndex(1);
 				}
 			}
 
@@ -206,19 +203,15 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 
 	@Override
 	public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-		Debug.e("IS RUN:" + res.engine.isRunning() + " ev: "
-				+ pSceneTouchEvent.getAction());
 		if (pSceneTouchEvent.isActionDown()) {
 			if (state == State.PAUSED) {
 				if (lastState != State.NEW) {
 					registerUpdateHandler(physics);
 				}
 				state = lastState;
-				Debug.d("->" + state);
 			} else if (state == State.NEW) {
 				registerUpdateHandler(physics);
 				state = State.PLAY;
-				Debug.d("->PLAY");
 				physics.setGravity(new Vector2(0, Constants.GRAVITY));
 				dandelionBody.setLinearVelocity(new Vector2(Constants.SPEED_X,
 						0));
@@ -230,13 +223,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 			} else if (state == State.AFTERLIFE) {
 				reset();
 				state = State.NEW;
-				Debug.d("->NEW");
 			} else {
 				Vector2 v = dandelionBody.getLinearVelocity();
 				v.x = Constants.SPEED_X;
 				v.y = Constants.SPEED_Y;
 				dandelionBody.setLinearVelocity(v);
-				Debug.d("TAP!");
 				res.sndFly.play();
 			}
 		}
@@ -244,7 +235,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 	}
 
 	public void resume() {
-		Debug.d("Game resumed");
 	}
 
 	public void pause() {
@@ -256,7 +246,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
 		super.onManagedUpdate(pSecondsElapsed);
-		// pb.setParallaxValue(res.camera.getCenterX());
 		if (scored) {
 			addPillar();
 			sortChildren();
@@ -278,7 +267,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				&& timestamp + TIME_TO_RESSURECTION < System
 						.currentTimeMillis()) {
 			state = State.AFTERLIFE;
-			Debug.d("->AFTERLIFE");
 		}
 	}
 
@@ -296,7 +284,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				|| Constants.BODY_WALL.equals(contact.getFixtureB().getBody()
 						.getUserData())) {
 			state = State.DEAD;
-			Debug.d("->DEAD");
 			res.sndFail.play();
 			if (score > res.activity.getHighScore()) {
 				res.activity.setHighScore(score);
