@@ -47,7 +47,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener, ContactLi
 	Text infoText;
 	Text scoreText;
 	
-	TiledSprite dandelion;
+	Sprite dandelion;
 	Body dandelionBody;
 	ParallaxBackground pb;
 	
@@ -129,16 +129,17 @@ public class GameScene extends Scene implements IOnSceneTouchListener, ContactLi
 	}
 
 	private void createActor() {
-		dandelion = new TiledSprite(200, 400, res.dandelionRegion, vbom);
+		dandelion = new Sprite(200, 400, res.dandelionRegion, vbom);
 		dandelion.setZIndex(999);
 		dandelion.registerUpdateHandler(new IUpdateHandler() {
 
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
 				if (dandelionBody.getLinearVelocity().y > -0.01) {
-					dandelion.setCurrentTileIndex(0);
+					//dandelion.setCurrentTileIndex(1);
+					dandelion.setRotation(-45);
 				} else {
-					dandelion.setCurrentTileIndex(1);
+					//dandelion.setCurrentTileIndex(1);
 				}
 			}
 

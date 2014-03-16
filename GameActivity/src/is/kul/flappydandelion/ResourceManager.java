@@ -44,7 +44,7 @@ public class ResourceManager {
 	private BuildableBitmapTextureAtlas gameObjectsAtlas;
 
 	public TextureRegion cloudRegion;
-	public TiledTextureRegion dandelionRegion;
+	public TextureRegion dandelionRegion;
 	public TextureRegion pillarRegion;
 
 	public TextureRegion bannerRegion;
@@ -103,8 +103,8 @@ public class ResourceManager {
 				gameObjectsAtlas, activity.getAssets(), "pillar.png");
 
 		dandelionRegion = BitmapTextureAtlasTextureRegionFactory
-				.createTiledFromAsset(gameObjectsAtlas, activity.getAssets(),
-						"dandelion.png", 2, 1);
+				.createFromAsset(gameObjectsAtlas, activity.getAssets(),
+						"dandelion.png");
 
 		bannerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "banner.png");
