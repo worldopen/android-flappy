@@ -7,6 +7,7 @@ import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+import org.andengine.opengl.font.BitmapFont;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
@@ -29,7 +30,7 @@ public class ResourceManager {
 
 	// font
 	public Font font;
-
+	
 	// common objects
 	public GameActivity activity;
 	public Engine engine;
@@ -49,6 +50,12 @@ public class ResourceManager {
 
 	public TextureRegion bannerRegion;
 	public TextureRegion backGround;
+	public TextureRegion tapBackGround;
+	public TextureRegion box;
+	public TextureRegion btnPlay;
+	public TextureRegion btnScore;
+	public TextureRegion btnFbShare;
+	
 	// sfx
 	public Sound sndFly;
 	public Sound sndFail;
@@ -108,9 +115,24 @@ public class ResourceManager {
 
 		bannerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "banner.png");
+		
 		backGround = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "back03.png");
 
+		tapBackGround = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				gameObjectsAtlas, activity.getAssets(), "tap.png");
+		
+		box = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				gameObjectsAtlas, activity.getAssets(), "box.png");
+		
+		btnFbShare = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				gameObjectsAtlas, activity.getAssets(), "btnfbshare.png");
+		
+		btnPlay = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				gameObjectsAtlas, activity.getAssets(), "btnplay.png");
+		
+		btnScore = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				gameObjectsAtlas, activity.getAssets(), "btnscore.png");
 		try {
 			gameObjectsAtlas
 					.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(
