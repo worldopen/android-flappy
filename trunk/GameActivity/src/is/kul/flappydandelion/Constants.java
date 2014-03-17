@@ -25,7 +25,7 @@ public class Constants {
 	
 	public static final float SPEED_X = 6;
 	public static final float GRAVITY = -40;
-	public static final float SPEED_Y = 12;
+	public static final float SPEED_Y = 15;
 	
 	public static final String KEY_HISCORE = "hiscore";
 }
