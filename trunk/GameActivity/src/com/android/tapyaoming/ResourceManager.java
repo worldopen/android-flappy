@@ -32,6 +32,9 @@ public class ResourceManager {
 
 	// font
 	public Font font;
+	public Font fontGameOver;
+	public Font fontScore;
+	public Font fontBest;
 
 	// common objects
 	public GameActivity activity;
@@ -84,10 +87,22 @@ public class ResourceManager {
 				"font.ttf", 50f, true, Color.WHITE_ABGR_PACKED_INT, 2,
 				Color.BLACK_ABGR_PACKED_INT);
 		font.load();
+		fontScore = FontFactory.createStrokeFromAsset(
+				activity.getFontManager(), activity.getTextureManager(), 256,
+				256, activity.getAssets(), "font.ttf", 40f, true,
+				Color.WHITE_ABGR_PACKED_INT, 2, Color.BLACK_ABGR_PACKED_INT);
+		fontScore.load();
+		fontGameOver = FontFactory.createStrokeFromAsset(
+				activity.getFontManager(), activity.getTextureManager(), 256,
+				256, activity.getAssets(), "font.ttf", 60f, true,
+				Color.YELLOW_ARGB_PACKED_INT, 2, Color.BLACK_ARGB_PACKED_INT);
+		fontGameOver.load();
 	}
 
 	public void unloadFont() {
 		font.unload();
+		fontGameOver.unload();
+		fontScore.unload();
 	}
 
 	// splash

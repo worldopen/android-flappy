@@ -13,6 +13,7 @@ import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.ITouchArea;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.ParallaxBackground;
 import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
@@ -25,6 +26,7 @@ import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.debug.Debug;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -35,7 +37,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 public class GameScene extends Scene implements IOnSceneTouchListener,
-		ContactListener {
+		ContactListener, ITouchArea {
 
 	private static final long TIME_TO_RESSURECTION = 200;
 	PhysicsWorld physics;
@@ -46,6 +48,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 
 	Text infoText;
 	Text scoreText;
+	Text finishScore;
+	Text finishBest;
+
 	Sprite tapBackGround;
 
 	Sprite dandelion;
@@ -65,6 +70,17 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 	protected VertexBufferObjectManager vbom = ResourceManager.getInstance().vbom;
 
 	/**
+	 * variable for score
+	 */
+	private Sprite box;
+	private Sprite play;
+	private Sprite btnScore;
+	private Sprite faceShare;
+	private Text gameOver;
+
+	private boolean reset = false;
+
+	/**
 	 * ham khoi tao game
 	 */
 	public GameScene() {
@@ -77,9 +93,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 		createBounds();
 
 		createText();
-
 		res.camera.setChaseEntity(dandelion);
-
+		showOrHideScore(false);
 		sortChildren();
 		setOnSceneTouchListener(this);
 
@@ -105,6 +120,121 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				+ res.tapBackGround.getHeight() / 2, res.tapBackGround, vbom);
 		tapBackGround.setAnchorCenter(0, 1);
 		hud.attachChild(tapBackGround);
+		createScore(hud);
+	}
+
+	// show score when finish game
+	private void createScore(HUD hud) {
+		gameOver = new Text(Constants.CW / 2, Constants.CH / 2 + 50
+				+ res.box.getHeight() / 2 + res.btnFbShare.getHeight(),
+				res.fontGameOver, "Game Over", vbom);
+		hud.attachChild(gameOver);
+
+		box = new Sprite(Constants.CW / 2, Constants.CH / 2
+				+ res.btnFbShare.getHeight(), res.box, vbom);
+		hud.attachChild(box);
+
+		play = new Sprite(Constants.CW / 2 - res.btnPlay.getWidth() / 2 - 30,
+				Constants.CH / 2 - res.box.getHeight() / 2, res.btnPlay, vbom) {
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
+					float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				if (pSceneTouchEvent.isActionUp() && play.isVisible()) {
+					play.setAlpha(1f);
+				} else if (pSceneTouchEvent.isActionDown() && play.isVisible()) {
+					play.setAlpha(0.7f);
+					if (state == State.AFTERLIFE) {
+						reset = true;
+					}
+				}
+				return false;
+			}
+		};
+		hud.attachChild(play);
+		hud.registerTouchArea(play);
+
+		btnScore = new Sprite(Constants.CW / 2 + res.btnPlay.getWidth() / 2
+				+ 30, Constants.CH / 2 - res.box.getHeight() / 2, res.btnScore,
+				vbom) {
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
+					float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				// TODO Auto-generated method stub
+				if (pSceneTouchEvent.isActionUp() && btnScore.isVisible()) {
+					btnScore.setAlpha(1f);
+				} else if (pSceneTouchEvent.isActionDown()
+						&& btnScore.isVisible()) {
+					btnScore.setAlpha(0.7f);
+				}
+				return false;
+			}
+		};
+		hud.registerTouchArea(btnScore);
+		hud.attachChild(btnScore);
+
+		faceShare = new Sprite(Constants.CW / 2, Constants.CH / 2
+				- res.box.getHeight() / 2 - res.btnScore.getHeight(),
+				res.btnFbShare, vbom) {
+			@Override
+			public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
+					float pTouchAreaLocalX, float pTouchAreaLocalY) {
+				// TODO Auto-generated method stub
+				if (pSceneTouchEvent.isActionUp() && faceShare.isVisible()) {
+					faceShare.setAlpha(1f);
+				} else if (pSceneTouchEvent.isActionDown()
+						&& faceShare.isVisible()) {
+					faceShare.setAlpha(0.9f);
+				}
+				return false;
+			}
+		};
+		hud.registerTouchArea(faceShare);
+		hud.attachChild(faceShare);
+
+		float positionX = box.getX() + box.getWidth() / 2;
+		float positionY = box.getY() + box.getHeight() / 2;
+		Debug.e(positionX + ":" + positionY);
+		finishBest = new Text(positionX - 40, positionY - 80, res.fontScore,
+				"12345678901234567890", vbom);
+		finishBest.setText(String.valueOf(score));
+		finishBest.setPosition(finishBest.getX() - finishBest.getWidth(),
+				finishBest.getY());
+		hud.attachChild(finishBest);
+
+		finishScore = new Text(positionX - 40, positionY - 160, res.fontScore,
+				"12345678901234567890", vbom);
+		finishScore.setText(String.valueOf(res.activity.getHighScore()));
+		finishScore.setPosition(finishScore.getX() - finishScore.getWidth(),
+				finishScore.getY());
+		hud.attachChild(finishScore);
+	}
+
+	public void showOrHideScore(boolean show) {
+
+		gameOver.setVisible(show);
+		box.setVisible(show);
+		play.setVisible(show);
+		btnScore.setVisible(show);
+		faceShare.setVisible(show);
+
+		if (show) {
+			play.setAlpha(1f);
+			btnScore.setAlpha(1f);
+			faceShare.setAlpha(1f);
+			scoreText.setVisible(!show);
+			finishBest.setText(String.valueOf(score));
+			finishBest.setPosition(box.getX() + box.getWidth() / 2 - 40
+					- finishBest.getWidth(), finishBest.getY());
+			finishScore.setText(String.valueOf(res.activity.getHighScore()));
+			finishScore.setPosition(box.getX() + box.getWidth() / 2 - 40
+					- finishScore.getWidth(), finishScore.getY());
+			finishScore.setVisible(true);
+			finishBest.setVisible(true);
+		} else {
+			scoreText.setVisible(true);
+			finishBest.setVisible(false);
+			finishScore.setVisible(false);
+		}
 	}
 
 	/**
@@ -158,6 +288,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 		attachChild(dandelion);
 	}
 
+	/**
+	 * create background
+	 */
 	private void createBackground() {
 		pb = new ParallaxBackground(0.75f, 0.83f, 0.95f);
 		Entity clouds = new Rectangle(0, 0, 480, 800, vbom);
@@ -235,8 +368,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 			} else if (state == State.DEAD) {
 				// don't touch the dead!
 			} else if (state == State.AFTERLIFE) {
-				reset();
-				state = State.NEW;
+
 			} else {
 				Vector2 v = dandelionBody.getLinearVelocity();
 				v.x = Constants.SPEED_X;
@@ -257,9 +389,23 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 		state = State.PAUSED;
 	}
 
+	int temp = 0;
+
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
 		super.onManagedUpdate(pSecondsElapsed);
+		if (reset) {
+			temp++;
+			if (temp == 20) {
+				temp = 0;
+				reset = false;
+				reset();
+				state = State.NEW;
+				showOrHideScore(false);
+			}
+			return;
+		}
+
 		if (scored) {
 			addPillar();
 			sortChildren();
@@ -281,6 +427,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				&& timestamp + TIME_TO_RESSURECTION < System
 						.currentTimeMillis()) {
 			state = State.AFTERLIFE;
+			showOrHideScore(true);
 		}
 	}
 
@@ -288,7 +435,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 		if (!p.hasParent()) {
 			attachChild(p);
 		}
-
 	}
 
 	@Override
@@ -330,5 +476,4 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 	}
-
 }
