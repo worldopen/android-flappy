@@ -24,7 +24,7 @@ public class Pillar extends Entity {
 	private Body pillarDownBody;
 	private Body scoreSensor;
 	
-	final float shift = 80;
+	final float shift = 75;
 	
 	public Pillar(float x, float y, TextureRegion reg, VertexBufferObjectManager vbom, PhysicsWorld physics) {
 		super(x, y);
