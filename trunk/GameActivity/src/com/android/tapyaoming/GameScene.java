@@ -142,7 +142,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				if (pSceneTouchEvent.isActionUp() && play.isVisible()) {
 					play.setAlpha(1f);
 				} else if (pSceneTouchEvent.isActionDown() && play.isVisible()) {
-					play.setAlpha(0.7f);
+					play.setAlpha(0.8f);
 					if (state == State.AFTERLIFE) {
 						reset = true;
 					}
@@ -164,7 +164,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 					btnScore.setAlpha(1f);
 				} else if (pSceneTouchEvent.isActionDown()
 						&& btnScore.isVisible()) {
-					btnScore.setAlpha(0.7f);
+					btnScore.setAlpha(0.8f);
 				}
 				return false;
 			}
