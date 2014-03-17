@@ -139,10 +139,7 @@ public class GameActivity extends BaseGameActivity {
 			}
 		};
 
-		splash.setPosition(
-				Constants.CW / 2,
-				(Constants.CH / 2 + ResourceManager.getInstance().splashTextureRegion
-						.getHeight() / 2));
+		splash.setPosition(Constants.CW / 2, (Constants.CH / 2));
 		splashScene.attachChild(splash);
 	}
 
