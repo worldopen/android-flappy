@@ -14,11 +14,15 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.IResolutionPolicy;
+import org.andengine.entity.primitive.Gradient;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.scene.background.EntityBackground;
+import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
 import android.content.Intent;
@@ -141,6 +145,7 @@ public class GameActivity extends BaseGameActivity {
 
 		splash.setPosition(Constants.CW / 2, (Constants.CH / 2));
 		splashScene.attachChild(splash);
+		//SpriteBackground spriteBackGroud = new SpriteBackground(pSprite);
 	}
 
 	public void gotoPlayStore() {
