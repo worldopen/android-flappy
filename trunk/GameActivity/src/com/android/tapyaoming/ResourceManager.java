@@ -60,8 +60,6 @@ public class ResourceManager {
 	public TextureRegion btnPlay;
 	public TextureRegion btnScore;
 	public TextureRegion btnFbShare;
-
-	public TextureRegion splashTextureRegion;
 	// sfx
 	public Sound sndFly;
 	public Sound sndFail;
@@ -131,10 +129,6 @@ public class ResourceManager {
 		dandelionRegion = BitmapTextureAtlasTextureRegionFactory
 				.createFromAsset(gameObjectsAtlas, activity.getAssets(),
 						"dandelion.png");
-
-		splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-				gameObjectsAtlas, activity.getAssets(), "splash.png");
-
 		backGround = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "background.png");
 
