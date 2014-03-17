@@ -136,7 +136,7 @@ public class ResourceManager {
 				gameObjectsAtlas, activity.getAssets(), "splash.png");
 
 		backGround = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
-				gameObjectsAtlas, activity.getAssets(), "back03.png");
+				gameObjectsAtlas, activity.getAssets(), "background.png");
 
 		tapBackGround = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "tap.png");
