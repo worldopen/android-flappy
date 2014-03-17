@@ -14,15 +14,14 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.IResolutionPolicy;
-import org.andengine.entity.primitive.Gradient;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.scene.background.EntityBackground;
-import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.util.GLState;
 import org.andengine.ui.activity.BaseGameActivity;
-import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
 import android.content.Intent;
@@ -39,9 +38,8 @@ public class GameActivity extends BaseGameActivity {
 	private Scene splashScene;
 	private Sprite splash;
 
-	private enum SceneType {
-		SPLASH, MAIN
-	}
+	private BitmapTextureAtlas texImage;
+	private TextureRegion regImage;
 
 	SharedPreferences prefs;
 
@@ -83,6 +81,12 @@ public class GameActivity extends BaseGameActivity {
 				getVertexBufferObjectManager());
 		ResourceManager.getInstance().loadFont();
 		ResourceManager.getInstance().loadGameResources();
+
+		texImage = new BitmapTextureAtlas(this.getTextureManager(), 1024, 1024,
+				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		regImage = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
+				texImage, this.getAssets(), "splash.jpg", 0, 0);
+		texImage.load();
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
@@ -133,9 +137,7 @@ public class GameActivity extends BaseGameActivity {
 	private void initSplashScene() {
 		Log.d("-------initSplashScene()---------", " ");
 		splashScene = new Scene();
-		splash = new Sprite(0, 0,
-				ResourceManager.getInstance().splashTextureRegion,
-				ResourceManager.getInstance().vbom) {
+		splash = new Sprite(0, 0, regImage, ResourceManager.getInstance().vbom) {
 			@Override
 			protected void preDraw(GLState pGLState, Camera pCamera) {
 				super.preDraw(pGLState, pCamera);
@@ -145,7 +147,6 @@ public class GameActivity extends BaseGameActivity {
 
 		splash.setPosition(Constants.CW / 2, (Constants.CH / 2));
 		splashScene.attachChild(splash);
-		//SpriteBackground spriteBackGroud = new SpriteBackground(pSprite);
 	}
 
 	public void gotoPlayStore() {
