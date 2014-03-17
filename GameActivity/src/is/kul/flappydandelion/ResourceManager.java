@@ -10,6 +10,7 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.BitmapFont;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -21,6 +22,7 @@ import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.GooglePlayUtils;
 import org.andengine.util.adt.color.Color;
 
 import android.graphics.Typeface;
@@ -30,7 +32,7 @@ public class ResourceManager {
 
 	// font
 	public Font font;
-	
+
 	// common objects
 	public GameActivity activity;
 	public Engine engine;
@@ -55,7 +57,7 @@ public class ResourceManager {
 	public TextureRegion btnPlay;
 	public TextureRegion btnScore;
 	public TextureRegion btnFbShare;
-	
+
 	// sfx
 	public Sound sndFly;
 	public Sound sndFail;
@@ -76,10 +78,11 @@ public class ResourceManager {
 	}
 
 	public void loadFont() {
-		font = FontFactory.createStroke(activity.getFontManager(),
-				activity.getTextureManager(), 256, 256,
-				Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD), 50, true,
-				Color.WHITE_ABGR_PACKED_INT, 2, Color.BLACK_ABGR_PACKED_INT);
+		FontFactory.setAssetBasePath("font/");
+		font = FontFactory.createStrokeFromAsset(activity.getFontManager(),
+				activity.getTextureManager(), 256, 256, activity.getAssets(),
+				"font.ttf", 50f, true, Color.WHITE_ABGR_PACKED_INT, 2,
+				Color.BLACK_ABGR_PACKED_INT);
 		font.load();
 	}
 
@@ -115,22 +118,22 @@ public class ResourceManager {
 
 		bannerRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "banner.png");
-		
+
 		backGround = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "back03.png");
 
 		tapBackGround = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "tap.png");
-		
+
 		box = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "box.png");
-		
+
 		btnFbShare = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "btnfbshare.png");
-		
+
 		btnPlay = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "btnplay.png");
-		
+
 		btnScore = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "btnscore.png");
 		try {
