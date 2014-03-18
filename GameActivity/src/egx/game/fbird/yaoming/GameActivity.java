@@ -1,6 +1,6 @@
 package egx.game.fbird.yaoming;
 
-import com.android.floppyyaoming.R;
+import egx.game.fbird.yaoming.R;
 import com.startapp.android.publish.StartAppAd;
 
 import java.io.IOException;
@@ -22,7 +22,6 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.util.GLState;
-import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.LayoutGameActivity;
 import org.andengine.util.debug.Debug;
 
