@@ -1,6 +1,6 @@
 package com.android.tapyaoming;
 
-import com.android.tapyaoming.R;
+import com.android.tapzaoming.R;
 
 import java.io.IOException;
 
