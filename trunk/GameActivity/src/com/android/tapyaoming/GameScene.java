@@ -5,6 +5,7 @@ package com.android.tapyaoming;
 
 import is.kul.flappydandelion.R;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -20,13 +21,19 @@ import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.entity.text.Text;
+import org.andengine.entity.util.ScreenCapture;
+import org.andengine.entity.util.ScreenCapture.IScreenCaptureCallback;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.FileUtils;
 import org.andengine.util.debug.Debug;
+
+import android.os.Environment;
+import android.util.Log;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -184,6 +191,48 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				} else if (pSceneTouchEvent.isActionDown()
 						&& faceShare.isVisible()) {
 					faceShare.setAlpha(0.9f);
+					ScreenCapture screenCapture = new ScreenCapture();
+					screenCapture.setPosition(res.camera.getCenterX(),
+							res.camera.getCenterY());
+					screenCapture.setSize(res.camera.getWidth(),
+							res.camera.getHeight());
+					attachChild(screenCapture);
+					final int viewWidth = (int) res.camera.getSurfaceWidth();
+					final int viewHeight = (int) res.camera.getSurfaceHeight();
+
+					File mediaStorageDir = new File(
+							Environment
+									.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+							"TAP_ZAOMING");
+
+					if (!mediaStorageDir.exists()) {
+						if (!mediaStorageDir.mkdirs()) {
+							Log.e("Colorization", "failed to create directory");
+						}
+					}
+					File file = new File(mediaStorageDir.getPath()
+							+ File.separator + "IMG_"
+							+ System.currentTimeMillis() + ".jpg");
+					Log.e("Utils", "SaveImage : " + file.getPath());
+					final String mFilePath = file.getAbsolutePath();
+					FileUtils.ensureDirectoriesExistOnExternalStorage(
+							res.activity, "");
+					screenCapture.capture(viewWidth, viewHeight, mFilePath,
+							new IScreenCaptureCallback() {
+
+								@Override
+								public void onScreenCaptured(String pFilePath) {
+									// TODO Auto-generated method stub
+									Debug.e(mFilePath);
+								}
+
+								@Override
+								public void onScreenCaptureFailed(
+										String pFilePath, Exception pException) {
+									// TODO Auto-generated method stub
+									Debug.e(mFilePath + "error");
+								}
+							});
 				}
 				return false;
 			}
@@ -475,5 +524,10 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
+	}
+	
+	public void captureScrenAndShareFace()
+	{
+		
 	}
 }
