@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.android.floppyzaoming.GameActivity"
+            android:name="com.android.floppyyaoming.GameActivity"
             android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
