@@ -51,6 +51,7 @@ public class ResourceManager {
 
 	public TextureRegion cloudRegion;
 	public TextureRegion dandelionRegion;
+	public TiledTextureRegion blood_sprite;
 	public TextureRegion pillarRegion;
 
 	public TextureRegion bannerRegion;
@@ -119,6 +120,10 @@ public class ResourceManager {
 		gameObjectsAtlas = new BuildableBitmapTextureAtlas(
 				activity.getTextureManager(), 1024, 1024,
 				BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+
+		blood_sprite = BitmapTextureAtlasTextureRegionFactory
+				.createTiledFromAsset(gameObjectsAtlas, activity.getAssets(),
+						"blood_sprire.png", 4, 4);
 
 		cloudRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(
 				gameObjectsAtlas, activity.getAssets(), "cloud.png");
