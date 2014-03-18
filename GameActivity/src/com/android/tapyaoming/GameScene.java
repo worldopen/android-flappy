@@ -3,7 +3,7 @@
  */
 package com.android.tapyaoming;
 
-import com.android.tapyaoming.R;
+import com.android.tapzaoming.R;
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
