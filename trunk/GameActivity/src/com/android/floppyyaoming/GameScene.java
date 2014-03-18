@@ -63,7 +63,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 	Sprite dandelion;
 	Body dandelionBody;
 	ParallaxBackground pb;
-
+	TiledSprite blood;
 	State state = State.NEW;
 	State lastState = state;
 	long timestamp = 0;
@@ -87,6 +87,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 
 	private boolean reset = false;
 
+	private boolean isBlood = false;
+	private int countBlood = 0;
+
 	/**
 	 * ham khoi tao game
 	 */
@@ -104,7 +107,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 		showOrHideScore(false);
 		sortChildren();
 		setOnSceneTouchListener(this);
-
+		blood.setVisible(false);
 		registerUpdateHandler(physics);
 	}
 
@@ -152,6 +155,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 					play.setAlpha(0.8f);
 					if (state == State.AFTERLIFE) {
 						reset = true;
+						blood.setVisible(false);
+						blood.setCurrentTileIndex(0);
 					}
 				}
 				return false;
@@ -335,6 +340,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 		physics.registerPhysicsConnector(new PhysicsConnector(dandelion,
 				dandelionBody));
 		attachChild(dandelion);
+		blood = new TiledSprite(200, 400, res.blood_sprite, vbom);
+		blood.setZIndex(999);
+		blood.setCurrentTileIndex(0);
+		attachChild(blood);
+		blood.setVisible(false);
 	}
 
 	/**
@@ -387,7 +397,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 
 		unregisterUpdateHandler(physics);
 		physics.onUpdate(0);
-
 		state = State.NEW;
 	}
 
@@ -455,6 +464,15 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 			return;
 		}
 
+		if (isBlood && countBlood / 2 < 7) {
+			countBlood++;
+			blood.setCurrentTileIndex(countBlood / 2);
+			if (countBlood / 2 == 7) {
+				countBlood = 0;
+				isBlood = false;
+			}
+		}
+
 		if (scored) {
 			addPillar();
 			sortChildren();
@@ -493,6 +511,13 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				|| Constants.BODY_WALL.equals(contact.getFixtureB().getBody()
 						.getUserData())) {
 			state = State.DEAD;
+			if (this.dandelion.getY() < 200) {
+				//this.dandelion.setVisible(false);
+				isBlood = true;
+				blood.setCurrentTileIndex(0);
+				blood.setPosition(this.dandelion.getX(),
+						this.dandelion.getY() - 32);
+			}
 			res.sndFail.play();
 			if (score > res.activity.getHighScore()) {
 				res.activity.setHighScore(score);
@@ -525,9 +550,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 	}
-	
-	public void captureScrenAndShareFace()
-	{
-		
+
+	public void captureScrenAndShareFace() {
+
 	}
 }
