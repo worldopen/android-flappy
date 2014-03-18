@@ -3,8 +3,7 @@
  */
 package com.android.tapyaoming;
 
-import is.kul.flappydandelion.R;
-
+import com.android.tapyaoming.R;
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
