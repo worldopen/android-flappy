@@ -1,7 +1,7 @@
-package com.android.floppyyaoming;
-
+package egx.game.fbird.yaoming;
 
 import com.android.floppyyaoming.R;
+import com.startapp.android.publish.StartAppAd;
 
 import java.io.IOException;
 
@@ -23,6 +23,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.util.GLState;
 import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.ui.activity.LayoutGameActivity;
 import org.andengine.util.debug.Debug;
 
 import android.content.Intent;
@@ -31,7 +32,7 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-public class GameActivity extends BaseGameActivity {
+public class GameActivity extends LayoutGameActivity {
 
 	private Camera camera;
 
@@ -43,9 +44,11 @@ public class GameActivity extends BaseGameActivity {
 	private TextureRegion regImage;
 
 	SharedPreferences prefs;
+	private StartAppAd startAppAd;
 
 	@Override
 	public Engine onCreateEngine(EngineOptions pEngineOptions) {
+		startAppAd = new StartAppAd(this);
 		Engine engine = new LimitedFPSEngine(pEngineOptions,
 				Constants.FPS_LIMIT);
 		return engine;
@@ -94,6 +97,7 @@ public class GameActivity extends BaseGameActivity {
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback)
 			throws IOException {
+		StartAppAd.init(this, "103326818", "203475122");
 		initSplashScene();
 		pOnCreateSceneCallback.onCreateSceneFinished(this.splashScene);
 	}
@@ -120,8 +124,15 @@ public class GameActivity extends BaseGameActivity {
 	@Override
 	public synchronized void onResumeGame() {
 		super.onResumeGame();
+		startAppAd.onResume();
 		if (gameScene != null)
 			gameScene.resume();
+	}
+
+	@Override
+	public void onBackPressed() {
+		startAppAd.onBackPressed();
+		super.onBackPressed();
 	}
 
 	private void loadScenes() {
@@ -131,6 +142,7 @@ public class GameActivity extends BaseGameActivity {
 	@Override
 	public synchronized void onPauseGame() {
 		super.onPauseGame();
+		//startAppAd.onPause();
 		if (gameScene != null)
 			gameScene.pause();
 	}
@@ -165,6 +177,18 @@ public class GameActivity extends BaseGameActivity {
 			ResourceManager.getInstance().activity.startActivity(i);
 		}
 
+	}
+
+	@Override
+	protected int getLayoutID() {
+		// TODO Auto-generated method stub
+		return R.layout.activity_game;
+	}
+
+	@Override
+	protected int getRenderSurfaceViewID() {
+		// TODO Auto-generated method stub
+		return R.id.game_rendersurfaceview;
 	}
 
 }

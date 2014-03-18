@@ -1,7 +1,7 @@
 /**
  * Copyright (C) 2013 Martin Varga <android@kul.is>
  */
-package com.android.floppyyaoming;
+package egx.game.fbird.yaoming;
 
 import com.android.floppyyaoming.R;
 
