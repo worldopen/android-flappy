@@ -1,6 +1,6 @@
 package com.android.tapyaoming;
 
-import is.kul.flappydandelion.R;
+import com.android.tapyaoming.R;
 
 import java.io.IOException;
 
