@@ -27,9 +27,13 @@ import org.andengine.util.debug.Debug;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 public class GameActivity extends LayoutGameActivity {
 
@@ -141,7 +145,7 @@ public class GameActivity extends LayoutGameActivity {
 	@Override
 	public synchronized void onPauseGame() {
 		super.onPauseGame();
-		//startAppAd.onPause();
+		// startAppAd.onPause();
 		if (gameScene != null)
 			gameScene.pause();
 	}
@@ -176,6 +180,36 @@ public class GameActivity extends LayoutGameActivity {
 			ResourceManager.getInstance().activity.startActivity(i);
 		}
 
+	}
+
+	public boolean isVisibleFacebook() {
+		PackageManager pkManager = getPackageManager();
+		try {
+			PackageInfo pkgInfo = pkManager.getPackageInfo(
+					"com.facebook.katana", 0);
+			String getPkgInfo = pkgInfo.toString();
+			if (getPkgInfo.equals("com.facebook.katana")) {
+				toastOnUiThread(
+						"Facebook not found, Please install app before using action",
+						Toast.LENGTH_SHORT);
+				return false;
+			} else {
+				return true;
+			}
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public void faceShare() {
+		String urlToShare = "http://play.google.com/store/apps/details?id="
+				+ getString(R.string.google_play_app_id);
+		Intent intent = new Intent(Intent.ACTION_SEND);
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_TEXT, urlToShare);
+		intent.setPackage("com.facebook.katana");
+		startActivity(intent);
 	}
 
 	@Override
