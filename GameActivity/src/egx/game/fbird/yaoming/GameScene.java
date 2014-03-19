@@ -28,7 +28,6 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
 
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -83,6 +82,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 
 	private boolean isBlood = false;
 	private int countBlood = 0;
+
+	private boolean isTap = false;
+	private int countTimeTap = 0;
 
 	/**
 	 * ham khoi tao game
@@ -309,8 +311,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 			@Override
 			public void onUpdate(float pSecondsElapsed) {
 				if (dandelionBody.getLinearVelocity().y > -0.01) {
-					dandelion.setRotation(-45);
+					// dandelion.setRotation(-45);
 				} else {
+
 				}
 			}
 
@@ -418,6 +421,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				v.y = Constants.SPEED_Y;
 				dandelionBody.setLinearVelocity(v);
 				res.sndFly.play();
+				isTap = true;
 			}
 		}
 		return false;
@@ -434,9 +438,35 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 
 	int temp = 0;
 
+	private boolean isTapDown = false;
+	private int countTapDown = 30;
+
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
 		super.onManagedUpdate(pSecondsElapsed);
+		if (isTap) {
+			countTimeTap++;
+			dandelion.setRotation(countTimeTap / 2 * -3f);
+			isTapDown = false;
+			countTapDown = 30;
+			if (countTimeTap / 2 == 15) {
+				isTap = false;
+				countTimeTap = 0;
+				dandelion.setRotation(-45f);
+				isTapDown = true;
+			}
+		}
+
+		if (isTapDown) {
+			countTapDown--;
+			dandelion.setRotation(countTapDown / 2 * -3f);
+			if (countTapDown < 0) {
+				countTapDown = 30;
+				isTapDown = false;
+				dandelion.setRotation(0f);
+			}
+		}
+
 		if (reset) {
 			temp++;
 			if (temp == 20) {
@@ -497,7 +527,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 						.getUserData())) {
 			state = State.DEAD;
 			if (this.dandelion.getY() < 200) {
-				//this.dandelion.setVisible(false);
+				// this.dandelion.setVisible(false);
 				isBlood = true;
 				blood.setCurrentTileIndex(0);
 				blood.setPosition(this.dandelion.getX(),
