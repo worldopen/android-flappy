@@ -163,7 +163,7 @@ public class ResourceManager {
 
 		try {
 			sndFly = SoundFactory.createSoundFromAsset(activity.getEngine()
-					.getSoundManager(), activity, "sfx/fly.wav");
+					.getSoundManager(), activity, "sfx/fly.ogg");
 			sndFail = SoundFactory.createSoundFromAsset(activity.getEngine()
 					.getSoundManager(), activity, "sfx/fail.wav");
 		} catch (Exception e) {
