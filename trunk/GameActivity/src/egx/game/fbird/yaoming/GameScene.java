@@ -151,8 +151,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 					play.setAlpha(0.8f);
 					if (state == State.AFTERLIFE) {
 						reset = true;
-						blood.setVisible(false);
-						blood.setCurrentTileIndex(0);
 					}
 				}
 				return false;
@@ -193,39 +191,10 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				} else if (pSceneTouchEvent.isActionDown()
 						&& faceShare.isVisible()) {
 					faceShare.setAlpha(0.9f);
-					/*
-					 * ScreenCapture screenCapture = new ScreenCapture();
-					 * screenCapture.setPosition(res.camera.getCenterX(),
-					 * res.camera.getCenterY());
-					 * screenCapture.setSize(res.camera.getWidth(),
-					 * res.camera.getHeight()); attachChild(screenCapture);
-					 * final int viewWidth = (int) res.camera.getSurfaceWidth();
-					 * final int viewHeight = (int)
-					 * res.camera.getSurfaceHeight();
-					 * 
-					 * File mediaStorageDir = new File( Environment
-					 * .getExternalStoragePublicDirectory
-					 * (Environment.DIRECTORY_PICTURES), "TAP_ZAOMING");
-					 * 
-					 * if (!mediaStorageDir.exists()) { if
-					 * (!mediaStorageDir.mkdirs()) { Log.e("Colorization",
-					 * "failed to create directory"); } } File file = new
-					 * File(mediaStorageDir.getPath() + File.separator + "IMG_"
-					 * + System.currentTimeMillis() + ".jpg"); Log.e("Utils",
-					 * "SaveImage : " + file.getPath()); final String mFilePath
-					 * = file.getAbsolutePath();
-					 * FileUtils.ensureDirectoriesExistOnExternalStorage(
-					 * res.activity, ""); screenCapture.capture(viewWidth,
-					 * viewHeight, mFilePath, new IScreenCaptureCallback() {
-					 * 
-					 * @Override public void onScreenCaptured(String pFilePath)
-					 * { // TODO Auto-generated method stub Debug.e(mFilePath);
-					 * }
-					 * 
-					 * @Override public void onScreenCaptureFailed( String
-					 * pFilePath, Exception pException) { // TODO Auto-generated
-					 * method stub Debug.e(mFilePath + "error"); } });
-					 */
+					boolean isFace = res.activity.isVisibleFacebook();
+					if (isFace)
+						res.activity.faceShare();
+
 				}
 				return false;
 			}
@@ -473,6 +442,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 			if (temp == 20) {
 				temp = 0;
 				reset = false;
+				blood.setVisible(false);
+				blood.setCurrentTileIndex(0);
 				reset();
 				state = State.NEW;
 				showOrHideScore(false);
