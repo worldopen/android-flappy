@@ -173,6 +173,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener,
 				} else if (pSceneTouchEvent.isActionDown()
 						&& btnScore.isVisible()) {
 					btnScore.setAlpha(0.8f);
+					res.activity.gotoPlayStore();
 				}
 				return false;
 			}
