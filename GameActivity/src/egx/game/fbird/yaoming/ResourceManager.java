@@ -1,5 +1,7 @@
 package egx.game.fbird.yaoming;
-
+/**
+ * Copyright (C) 2013 Martin Varga <android@kul.is>
+ */
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;

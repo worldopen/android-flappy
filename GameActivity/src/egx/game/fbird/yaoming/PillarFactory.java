@@ -1,5 +1,7 @@
 package egx.game.fbird.yaoming;
-
+/**
+ * Copyright (C) 2013 Martin Varga <android@kul.is>
+ */
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.util.adt.pool.GenericPool;
