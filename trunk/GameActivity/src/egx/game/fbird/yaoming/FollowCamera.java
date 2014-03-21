@@ -1,5 +1,7 @@
 package egx.game.fbird.yaoming;
-
+/**
+ * Copyright (C) 2013 Martin Varga <android@kul.is>
+ */
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.IEntity;
 import org.andengine.util.Constants;

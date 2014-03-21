@@ -1,5 +1,7 @@
 package egx.game.fbird.yaoming;
-
+/**
+ * Copyright (C) 2013 Martin Varga <android@kul.is>
+ */
 import egx.game.fbird.yaoming.R;
 import com.startapp.android.publish.StartAppAd;
 
