@@ -1,6 +1,3 @@
-/**
- * Copyright (C) 2013 Martin Varga <android@kul.is>
- */
 package egx.game.fbird.yaoming;
 
 import org.andengine.engine.camera.Camera;

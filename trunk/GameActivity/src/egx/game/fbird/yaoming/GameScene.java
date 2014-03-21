@@ -1,6 +1,3 @@
-/**
- * Copyright (C) 2013 Martin Varga <android@kul.is>
- */
 package egx.game.fbird.yaoming;
 
 import egx.game.fbird.yaoming.R;
